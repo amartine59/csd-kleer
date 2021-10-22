@@ -15,4 +15,5 @@ boton_elem.addEventListener("click", (event) => {
     resultado.innerHTML = "Ganaste!";
     return;
   }
+  resultado.innerHTML = "Perdiste!";
 });

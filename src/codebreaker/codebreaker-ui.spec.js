@@ -20,6 +20,8 @@ describe("Codebreaker", () => {
   })
 
   it("Coincidencia entre numero ingresado y numero generado", () => {
+    document.querySelector("#numeroGenerado").value = 5;
+
     arriesgo("5");
     document.querySelector("#arriesgo").click();
 
@@ -44,7 +46,7 @@ describe("Codebreaker", () => {
     document.querySelector("#arriesgo").click();
 
     const resultado = document.querySelector("#resultado").innerHTML;
-    expect(resultado).toEqual("Ganaste!");
+    expect(resultado).toEqual("Perdiste!");
   });
 
 
