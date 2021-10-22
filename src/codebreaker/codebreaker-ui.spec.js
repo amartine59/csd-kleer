@@ -1,7 +1,10 @@
 import fs from "fs";
+import Codebreaker  from "../codebreaker/codebreaker";
+
 describe("Codebreaker", () => {
-  beforeEach(() =>{
+  beforeAll(() =>{
     document.body.innerHTML = fs.readFileSync("codebreaker.html", "utf8");
+    require("../codebreaker/presenter");
   });
 
   it("muestra una bienvenida", () => {
@@ -10,22 +13,40 @@ describe("Codebreaker", () => {
   });
 
   it("Generar numero aleatorio", () => {
-    let presenter = require("../codebreaker/presenter");
+    let cb = new Codebreaker();
 
-    expect(presenter.randomNumber).toBeGreaterThanOrEqual(0);
-    expect(presenter.randomNumber).toBeLessThanOrEqual(9);
+    expect(cb.RandomNumber).toBeGreaterThanOrEqual(0);
+    expect(cb.RandomNumber).toBeLessThanOrEqual(9);
   })
 
   it("Coincidencia entre numero ingresado y numero generado", () => {
-      let presenter = require("../codebreaker/presenter");
-      presenter.randomNumber = 5;
-  
-      arriesgo("5");
-      document.querySelector("#arriesgo").click();
-  
-      const resultado = document.querySelector("#resultado").innerHTML;
-      expect(resultado).toEqual("Ganaste!");
-    });
+    arriesgo("5");
+    document.querySelector("#arriesgo").click();
+
+    const resultado = document.querySelector("#resultado").innerHTML;
+    expect(resultado).toEqual("Ganaste!");
+  });
+
+  it("Si numero ingresado es igual a numero generado, mostrar ganaste", () => {
+    document.querySelector("#numeroGenerado").value = 5;
+
+    arriesgo("5");
+    document.querySelector("#arriesgo").click();
+
+    const resultado = document.querySelector("#resultado").innerHTML;
+    expect(resultado).toEqual("Ganaste!");
+  });
+
+  it("Si numero ingresado no es igual a numero generado, mostrar perdiste", () => {
+    document.querySelector("#numeroGenerado").value = 6;
+
+    arriesgo("5");
+    document.querySelector("#arriesgo").click();
+
+    const resultado = document.querySelector("#resultado").innerHTML;
+    expect(resultado).toEqual("Ganaste!");
+  });
+
 
   function arriesgo(numero) {
     document.querySelector("#numero").value = numero;
